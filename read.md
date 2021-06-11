@@ -1,4 +1,4 @@
-##Java Concurrency / Threads
+## Java Concurrency / Threads
 
 ### What is a process?
 A process is a unit execution that has its own memory space. Each instance of a Java Virtual Machine (JVM) run as a process (mostly). When we run a Java console application or a JavaFX application, we're kicking off a process. 

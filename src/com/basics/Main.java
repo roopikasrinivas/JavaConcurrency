@@ -1,19 +1,28 @@
 package com.basics;
 
+import static com.basics.ThreadColor.*;
+
 public class Main {
 
     public static void main(String[] args){
-        System.out.println("Hello from main thread");
-        Thread thread = new AnotherThread();
-        thread.start();
+        System.out.println(ANSI_RED+ "Hello from Main thread");
+        Thread anotherThread = new AnotherThread();
+        anotherThread.setName("==Another Thread ==");
+        anotherThread.start();
 
-        new Thread() {
-            public void run(){
-                System.out.println("Hello from the anonymous thread");
+        new Thread(() -> System.out.println(ANSI_GREEN+"Hello from the Anonymous thread")).start();
+
+        Thread myRunnableThread = new Thread(new MyRunnable() {
+            @Override
+            public void run() {
+                System.out.println(ANSI_CYAN + "Hello from anonymous My Runnable ");
             }
-        }.start();
+        });
+        myRunnableThread.start();
+        //anotherThread.interrupt();
 
-        System.out.println("Hello again from main thread");
+        System.out.println(ANSI_RED + "Hello again from main thread");
+
 
     }
 }

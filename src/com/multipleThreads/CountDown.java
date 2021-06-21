@@ -20,6 +20,7 @@ public class CountDown {
                 break;
         }
 
+        //synchronize using static variable or class // this // .class
         synchronized (m) {
             for (i = 10; i > 0; i--) {
                 System.out.println(color + Thread.currentThread().getName() + ": i = " + i);

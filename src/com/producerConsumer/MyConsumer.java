@@ -1,6 +1,7 @@
 package com.producerConsumer;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class MyConsumer implements Runnable {
@@ -18,23 +19,30 @@ public class MyConsumer implements Runnable {
 
     @Override
     public void run() {
+        long counter = 0;
         while (true) {
-            bufferLock.lock();
             try {
-                if (buffer.isEmpty()) {
-                    continue;
-                }
-                if (buffer.get(0).equals(EOF)) {
-                    System.out.println(color + "Exiting");
-                    break;
+                if (bufferLock.tryLock()) {
+                    try {
+                        if (buffer.isEmpty()) {
+                            continue;
+                        }
+                        System.out.println(color + "The counter = " + counter);
+                        if (buffer.get(0).equals(EOF)) {
+                            System.out.println(color + "Exiting");
+                            break;
+                        } else {
+                            System.out.println(color + "Removed " + buffer.remove(0));
+                        }
+                    } finally {
+                        bufferLock.unlock();
+                    }
                 } else {
-                    System.out.println(color + "Removed " + buffer.remove(0));
+                    counter++;
                 }
-
-            } finally {
-                bufferLock.unlock();
+            }catch(Exception e){
+                System.out.println(color + "Could not obtain lock");
             }
         }
-
     }
 }

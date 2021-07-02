@@ -1,6 +1,7 @@
 package com.messages;
 
 import java.util.Random;
+import java.util.concurrent.Callable;
 
 public class Writer implements Runnable{
 
@@ -30,5 +31,6 @@ public class Writer implements Runnable{
             }
         }
         message.write("Finished");
+
     }
 }
